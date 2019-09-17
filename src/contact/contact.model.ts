@@ -1,6 +1,6 @@
 import {Name} from "../models/name.model";
 
-class Contact {
+export class Contact {
     private _id: string;
     private name: Name;
     private emailId: string;
