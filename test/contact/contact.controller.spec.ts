@@ -21,7 +21,7 @@ class ContactControllerSpec {
 
     @test
     private async shouldCreateNewContact(): Promise<void> {
-        const contact = new Contact(new Name('first', null, 'last'), 'user1', '+91 23478923794', 'test@kabiraj.com', 'ABC pub. ltd.');
+        const contact = new Contact(new Name('first', null, 'last'), new Id(), '+91 23478923794', 'test@kabiraj.com', 'ABC pub. ltd.');
         const mockRequest = httpMocks.createRequest({
             body: contact
         });
@@ -35,7 +35,7 @@ class ContactControllerSpec {
     @test
     public async shouldUpdateWhileIdIsProper(): Promise<void> {
         const id = new Id();
-        const contact = new Contact(new Name('first', null, 'last'), 'user1', '+91 23478923794', 'test@kabiraj.com', 'ABC pub. ltd.');
+        const contact = new Contact(new Name('first', null, 'last'), new Id(), '+91 23478923794', 'test@kabiraj.com', 'ABC pub. ltd.');
         contact.id = id;
 
         const mockRequest = httpMocks.createRequest({
@@ -52,7 +52,7 @@ class ContactControllerSpec {
     @test
     public async shouldReturnBadRequestWhileIdIsNotProper(): Promise<void> {
         const id = new Id();
-        const contact = new Contact(new Name('first', null, 'last'), 'user1', '+91 23478923794', 'test@kabiraj.com', 'ABC pub. ltd.');
+        const contact = new Contact(new Name('first', null, 'last'), new Id(), '+91 23478923794', 'test@kabiraj.com', 'ABC pub. ltd.');
         contact.id = new Id();
 
         const mockRequest = httpMocks.createRequest({
@@ -78,5 +78,17 @@ class ContactControllerSpec {
 
         expect(response._getData()).to.equal(contact);
         expect(response._getStatusCode()).to.deep.equal(HttpStatusCode.Ok);
+    }
+
+    @test
+    public async shouldFetchContactsForUser(): Promise<void> {
+        const responseMock = httpMocks.createResponse();
+        const contactListForUser = anything();
+        const userId = new Id();
+        when(this.contactService.getFor(userId)).thenResolve(contactListForUser);
+
+        await this.targetObject.getByUserId(userId, responseMock);
+
+        expect(responseMock._getData()).to.equal(contactListForUser);
     }
 }

@@ -19,4 +19,13 @@ export class ContactRepository extends BaseRepository {
         const contact = MongoUtility.getLeanDocument<Contact>(document);
         return contact;
     }
+
+    public async getByUserId(userId: Id): Promise<Contact[]> {
+        const documents = await ContactModel.find({userId: userId});
+        const contacts = [];
+        documents.forEach(document => {
+            contacts.push(MongoUtility.getLeanDocument<Contact>(document));
+        });
+        return contacts;
+    }
 }

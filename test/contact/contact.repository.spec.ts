@@ -6,6 +6,7 @@ import {Name} from "../../src/models/name.model";
 import {expect} from 'chai';
 import {BaseRepositorySpec} from "../base/base.repository.spec";
 import {MongoUtility} from "../../src/utilities/mongo.utility";
+import {Id} from "../../src/models/id.model";
 
 @suite
 class ContactRepositorySpec extends BaseRepositorySpec {
@@ -19,7 +20,7 @@ class ContactRepositorySpec extends BaseRepositorySpec {
     @test
     private async shouldSaveNewContact(): Promise<void> {
         const contactCount = await ContactModel.countDocuments();
-        const contact = new Contact(new Name('wef', '', 'safasf'), 'asffsaf', 'asfasf');
+        const contact = new Contact(new Name('wef', '', 'safasf'), new Id(), 'asfasf');
 
         await this.targetObject.save(contact);
 
@@ -29,9 +30,9 @@ class ContactRepositorySpec extends BaseRepositorySpec {
 
     @test
     public async shouldUpdateContact(): Promise<void> {
-        const contact = new Contact(new Name('wef', '', 'safasf'), 'asffsaf', 'asfasf', '', '');
+        const contact = new Contact(new Name('wef', '', 'safasf'), new Id(), 'asfasf', '', '');
         await ContactModel.create(contact);
-        const updatedContact = new Contact(new Name('uerweiouroiw', '', 'safasf'), 'asffsaf', 'asfasf', '', '');
+        const updatedContact = new Contact(new Name('uerweiouroiw', '', 'safasf'), new Id(), 'asfasf', '', '');
         updatedContact.id = contact.id;
 
         await this.targetObject.update(updatedContact);
@@ -43,11 +44,27 @@ class ContactRepositorySpec extends BaseRepositorySpec {
 
     @test
     public async shouldFetchContactById(): Promise<void> {
-        const contact = new Contact(new Name('wef', '', 'safasf'), 'asffsaf', 'asfasf', '', '');
+        const contact = new Contact(new Name('wef', '', 'safasf'), new Id(), 'asfasf', '', '');
         await ContactModel.create(contact);
 
         const fetchedContact = await this.targetObject.getById(contact.id);
 
         expect(fetchedContact).to.deep.equal(contact);
+    }
+
+    @test
+    public async shouldFetchContactsByUserId(): Promise<void> {
+        const userId = new Id();
+        const contact1 = new Contact(new Name('wef', '', 'safasf'), userId, 'asfasf', '', '');
+        const contact2 = new Contact(new Name('wef', '', 'safasf'), userId, 'asfasf', '', '');
+        const contact3 = new Contact(new Name('wef', '', 'safasf'), userId, 'asfasf', '', '');
+
+        await ContactModel.create(contact1);
+        await ContactModel.create(contact2);
+        await ContactModel.create(contact3);
+
+        const contacts = await this.targetObject.getByUserId(userId);
+
+        expect(contacts).to.deep.include(contact1);
     }
 }

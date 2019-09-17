@@ -1,5 +1,14 @@
 import {Contact} from "./contact.model";
-import {controller, httpGet, httpPost, httpPut, request, requestParam, response} from "inversify-express-utils";
+import {
+    controller,
+    httpGet,
+    httpPost,
+    httpPut,
+    queryParam,
+    request,
+    requestParam,
+    response
+} from "inversify-express-utils";
 import {ContactService} from "./contact.service";
 import {Id} from "../models/id.model";
 import {Request, Response} from 'express';
@@ -33,6 +42,12 @@ export class ContactController {
     public async getById(id: Id, @response() response: Response) {
         const contact = await this.contactService.getById(id);
         response.status(HttpStatusCode.Ok).send(contact);
+    }
+
+    @httpGet('')
+    async getByUserId(@queryParam('userId') userId: Id, response: Response) {
+        const contacts = await this.contactService.getFor(userId);
+        response.status(HttpStatusCode.Ok).send(contacts);
     }
 }
 
