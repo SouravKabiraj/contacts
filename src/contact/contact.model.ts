@@ -5,12 +5,20 @@ import {prop, Typegoose} from "@hasezoey/typegoose";
 
 
 export class Contact extends Typegoose {
+    get id(): Id {
+        return this._id;
+    }
+
+    set id(value: Id) {
+        this._id = value;
+    }
+
     @prop() private _id: Id;
     @prop() private name: Name;
     @prop() private emailId: string;
     @prop() private phoneNumber: string;
     @prop() private company: string;
-    @prop() private userId: string;
+    @prop() public readonly userId: string;
 
     constructor(name: Name, userId: string, phoneNumber: string, emailId?: string, company?: string) {
         super();

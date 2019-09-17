@@ -23,4 +23,13 @@ class ContactServiceSpec {
 
         verify(this.contactRepository.save(contact)).once();
     }
+
+    @test
+    public async shouldUpdateContact(): Promise<void> {
+        const contact = new Contact(new Name('first', null, 'last'), 'userId', '+92 632647823', 'sjd@dj.com');
+
+        await this.targetObject.update(contact);
+
+        verify(this.contactRepository.update(contact)).once();
+    }
 }

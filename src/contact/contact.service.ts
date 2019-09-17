@@ -10,5 +10,9 @@ export class ContactService {
     public async create(contact: Contact): Promise<void> {
         await this.contactRepository.save(contact);
     }
+
+    public async update(contact: Contact): Promise<void> {
+        await this.contactRepository.update(contact);
+    }
 }
 
