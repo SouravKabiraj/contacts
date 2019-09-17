@@ -17,7 +17,7 @@ class ContactControllerSpec {
 
     @test
     private async shouldCreateNewContact(): Promise<void> {
-        const contact = new Contact(new Name('first', null, 'last'), 'test@kabiraj.com', '+91 23478923794', 'ABC pub. ltd.', 'user1');
+        const contact = new Contact(new Name('first', null, 'last'), 'user1', '+91 23478923794', 'test@kabiraj.com', 'ABC pub. ltd.');
 
         await this.targetObject.create(contact);
 

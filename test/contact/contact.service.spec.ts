@@ -17,7 +17,7 @@ class ContactServiceSpec {
 
     @test
     private async shouldCreateNewContact(): Promise<void> {
-        let contact = new Contact(new Name('First', null, 'User'), 'email@outlook.xom', '+12 979812632137', 'NA', 'user2');
+        let contact = new Contact(new Name('First', null, 'User'), 'user2', '+12 979812632137', 'email@outlook.xom', 'NA');
 
         await this.targetObject.create(contact);
 
