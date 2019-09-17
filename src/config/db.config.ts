@@ -1,4 +1,4 @@
-import * as mongoose from 'mongoose';
 import * as config from './default.json';
+import {connect} from 'mongoose';
 
-mongoose.connect(config.dbURI);
+connect(config.dbURI, {useNewUrlParser: true, useUnifiedTopology: true});

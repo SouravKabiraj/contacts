@@ -1,10 +1,11 @@
 import {Name} from "../models/name.model";
-import {prop, Typegoose} from 'typegoose';
 import {anything} from "ts-mockito";
+import {Id} from "../models/id.model";
+import {prop, Typegoose} from "@hasezoey/typegoose";
 
 
 export class Contact extends Typegoose {
-    @prop() private _id: string;
+    @prop() private _id: Id;
     @prop() private name: Name;
     @prop() private emailId: string;
     @prop() private phoneNumber: string;
@@ -13,6 +14,7 @@ export class Contact extends Typegoose {
 
     constructor(name: Name, userId: string, phoneNumber: string, emailId?: string, company?: string) {
         super();
+        this._id = new Id();
         this.name = name;
         this.emailId = emailId;
         this.phoneNumber = phoneNumber;
@@ -21,4 +23,4 @@ export class Contact extends Typegoose {
     }
 }
 
-const ContactModel = new Contact(anything(), anything(), anything(), anything(), anything()).getModelForClass(Contact);
+export const ContactModel = new Contact(anything(), anything(), anything(), anything(), anything()).getModelForClass(Contact);

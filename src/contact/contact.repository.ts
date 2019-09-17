@@ -1,9 +1,10 @@
 import {injectable} from "inversify";
-import {Contact} from "./contact.model";
+import {Contact, ContactModel} from "./contact.model";
+import {BaseRepository} from "../base/base.repository";
 
 @injectable()
-export class ContactRepository {
+export class ContactRepository extends BaseRepository {
     public async save(contact: Contact): Promise<void> {
-
+        await ContactModel.create(contact);
     }
 }
