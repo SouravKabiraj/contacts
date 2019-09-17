@@ -40,4 +40,14 @@ class ContactRepositorySpec extends BaseRepositorySpec {
         const leanDocument = MongoUtility.getLeanDocument<Contact>(foundDocument);
         expect(leanDocument).to.deep.equal(updatedContact);
     }
+
+    @test
+    public async shouldFetchContactById(): Promise<void> {
+        const contact = new Contact(new Name('wef', '', 'safasf'), 'asffsaf', 'asfasf', '', '');
+        await ContactModel.create(contact);
+
+        const fetchedContact = await this.targetObject.getById(contact.id);
+
+        expect(fetchedContact).to.deep.equal(contact);
+    }
 }

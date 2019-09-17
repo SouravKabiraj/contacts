@@ -1,6 +1,7 @@
 import {Contact} from "./contact.model";
 import {injectable} from "inversify";
 import {ContactRepository} from "./contact.repository";
+import {Id} from "../models/id.model";
 
 @injectable()
 export class ContactService {
@@ -13,6 +14,10 @@ export class ContactService {
 
     public async update(contact: Contact): Promise<void> {
         await this.contactRepository.update(contact);
+    }
+
+    public async getById(id: Id): Promise<Contact> {
+        return await this.contactRepository.getById(id);
     }
 }
 

@@ -3,7 +3,7 @@ import {suite, test} from "mocha-typescript";
 import {ContactController} from "../../src/contact/contact.controller";
 import {Contact} from "../../src/contact/contact.model";
 import {Name} from "../../src/models/name.model";
-import {deepEqual, instance, mock, verify} from "ts-mockito";
+import {anything, deepEqual, instance, mock, verify, when} from "ts-mockito";
 import {ContactService} from "../../src/contact/contact.service";
 import {Id} from "../../src/models/id.model";
 import * as httpMocks from 'node-mocks-http';
@@ -64,5 +64,19 @@ class ContactControllerSpec {
 
         verify(this.contactService.update(contact)).never();
         expect(response._getStatusCode()).to.deep.equal(HttpStatusCode.BadRequest);
+    }
+
+    @test
+    public async shouldFetchContactById(): Promise<void> {
+        const id = new Id();
+        const response = httpMocks.createResponse();
+        const contact = new Contact(anything(), anything(), anything());
+
+        when(this.contactService.getById(id)).thenResolve(contact);
+
+        await this.targetObject.getById(id, response);
+
+        expect(response._getData()).to.equal(contact);
+        expect(response._getStatusCode()).to.deep.equal(HttpStatusCode.Ok);
     }
 }

@@ -3,8 +3,10 @@ import {suite, test} from "mocha-typescript";
 import {ContactService} from "../../src/contact/contact.service";
 import {Contact} from "../../src/contact/contact.model";
 import {Name} from "../../src/models/name.model";
-import {instance, mock, verify} from "ts-mockito";
+import {anything, instance, mock, verify, when} from "ts-mockito";
 import {ContactRepository} from "../../src/contact/contact.repository";
+import {Id} from "../../src/models/id.model";
+import {expect} from 'chai';
 
 @suite
 class ContactServiceSpec {
@@ -31,5 +33,17 @@ class ContactServiceSpec {
         await this.targetObject.update(contact);
 
         verify(this.contactRepository.update(contact)).once();
+    }
+
+    @test
+    public async shouldFetchContactById(): Promise<void> {
+        const id = new Id();
+        const contact = new Contact(anything(), anything(), anything());
+
+        when(this.contactRepository.getById(id)).thenResolve(contact);
+
+        const fetchedContact = await this.targetObject.getById(id);
+
+        expect(fetchedContact).to.equal(contact);
     }
 }
