@@ -87,8 +87,28 @@ class ContactControllerSpec {
         const userId = new Id();
         when(this.contactService.getFor(userId)).thenResolve(contactListForUser);
 
-        await this.targetObject.getByUserId(userId, responseMock);
+        await this.targetObject.getByUserId(userId, responseMock, null, null);
 
         expect(responseMock._getData()).to.equal(contactListForUser);
+    }
+
+    @test
+    public async shouldFetchContactsForUserFromRecordOneToRecordThree(): Promise<void> {
+        const responseMock = httpMocks.createResponse();
+        const contact1 = new Contact(new Name('1', '', ''), new Id(), '');
+        const contact2 = new Contact(new Name('2', '', ''), new Id(), '');
+        const contact3 = new Contact(new Name('3', '', ''), new Id(), '');
+        const contact4 = new Contact(new Name('4', '', ''), new Id(), '');
+        const contact5 = anything();
+        const contact6 = anything();
+        const contactListForUser = [contact1, contact2, contact3, contact4, contact5, contact6];
+        const userId = new Id();
+        const fromIndex = 0;
+        const toIndex = 2;
+        when(this.contactService.getFor(userId)).thenResolve(contactListForUser);
+
+        await this.targetObject.getByUserId(userId, responseMock, fromIndex, toIndex);
+
+        expect(responseMock._getData()).to.deep.equal([contact1, contact2, contact3]);
     }
 }

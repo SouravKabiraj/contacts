@@ -45,8 +45,11 @@ export class ContactController {
     }
 
     @httpGet('')
-    async getByUserId(@queryParam('userId') userId: Id, response: Response) {
-        const contacts = await this.contactService.getFor(userId);
+    async getByUserId(@queryParam('userId') userId: Id, response: Response, @queryParam('userId') fromIndex: number, @queryParam('userId') toIndex: number) {
+        let contacts = await this.contactService.getFor(userId);
+        if (fromIndex != null && toIndex != null) {
+            contacts = contacts.slice(fromIndex, ++toIndex);
+        }
         response.status(HttpStatusCode.Ok).send(contacts);
     }
 }
