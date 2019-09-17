@@ -4,12 +4,14 @@ import {ContactRepository} from "../../src/contact/contact.repository";
 import {Contact, ContactModel} from "../../src/contact/contact.model";
 import {Name} from "../../src/models/name.model";
 import {expect} from 'chai';
+import {BaseRepositorySpec} from "../base/base.repository.spec";
 
 @suite
-class ContactRepositorySpec {
+class ContactRepositorySpec extends BaseRepositorySpec {
     private targetObject: ContactRepository;
 
     constructor() {
+        super();
         this.targetObject = new ContactRepository()
     }
 
