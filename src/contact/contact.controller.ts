@@ -20,6 +20,11 @@ export class ContactController {
     constructor(@inject("ContactService") private contactService: ContactService) {
     }
 
+    @httpGet('/health-check')
+    public healthCheck(@request() request: Request, @response() response: Response): void {
+        response.send(HttpStatusCode.Ok).send({health: 'ok'});
+    }
+
     @httpPost("/")
     public async create(@request() request: Request, @response() response: Response): Promise<void> {
         const contact: Contact = request.body;
@@ -30,7 +35,7 @@ export class ContactController {
     @httpPut("/:id")
     public async update(@requestParam('id') id: Id, @request() request: Request, @response() response: Response) {
         const contact: Contact = request.body;
-        if (Id.isEqual(id, contact.id)) {
+        if (Id.isEqual(id, contact._id)) {
             await this.contactService.update(contact);
             response.status(HttpStatusCode.Ok).send();
         } else {
@@ -40,7 +45,7 @@ export class ContactController {
     }
 
     @httpGet("/:id")
-    public async getById(id: Id, @response() response: Response) {
+    public async getById(@requestParam('id') id: Id, @response() response: Response) {
         const contact = await this.contactService.getById(id);
         response.status(HttpStatusCode.Ok).send(contact);
     }

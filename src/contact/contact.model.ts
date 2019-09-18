@@ -5,15 +5,7 @@ import {prop, Typegoose} from "@hasezoey/typegoose";
 
 
 export class Contact extends Typegoose {
-    get id(): Id {
-        return this._id;
-    }
-
-    set id(value: Id) {
-        this._id = value;
-    }
-
-    @prop() private _id: Id;
+    @prop() public _id: Id;
     @prop() private name: Name;
     @prop() private emailId: string;
     @prop() private phoneNumber: string;

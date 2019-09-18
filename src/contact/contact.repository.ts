@@ -7,11 +7,13 @@ import {MongoUtility} from "../utilities/mongo.utility";
 @injectable()
 export class ContactRepository extends BaseRepository {
     public async save(contact: Contact): Promise<void> {
+        contact._id = new Id();
+        console.log(contact);
         await ContactModel.create(contact);
     }
 
     public async update(contact: Contact): Promise<void> {
-        await ContactModel.updateOne({_id: contact.id}, contact);
+        await ContactModel.updateOne({_id: contact._id}, contact);
     }
 
     public async getById(id: Id): Promise<Contact> {

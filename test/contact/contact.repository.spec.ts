@@ -33,11 +33,11 @@ class ContactRepositorySpec extends BaseRepositorySpec {
         const contact = new Contact(new Name('wef', '', 'safasf'), new Id(), 'asfasf', '', '');
         await ContactModel.create(contact);
         const updatedContact = new Contact(new Name('uerweiouroiw', '', 'safasf'), new Id(), 'asfasf', '', '');
-        updatedContact.id = contact.id;
+        updatedContact._id = contact._id;
 
         await this.targetObject.update(updatedContact);
 
-        const foundDocument = await ContactModel.findById(contact.id);
+        const foundDocument = await ContactModel.findById(contact._id);
         const leanDocument = MongoUtility.getLeanDocument<Contact>(foundDocument);
         expect(leanDocument).to.deep.equal(updatedContact);
     }
@@ -47,7 +47,7 @@ class ContactRepositorySpec extends BaseRepositorySpec {
         const contact = new Contact(new Name('wef', '', 'safasf'), new Id(), 'asfasf', '', '');
         await ContactModel.create(contact);
 
-        const fetchedContact = await this.targetObject.getById(contact.id);
+        const fetchedContact = await this.targetObject.getById(contact._id);
 
         expect(fetchedContact).to.deep.equal(contact);
     }
