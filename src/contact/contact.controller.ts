@@ -13,10 +13,11 @@ import {ContactService} from "./contact.service";
 import {Id} from "../models/id.model";
 import {Request, Response} from 'express';
 import {HttpStatusCode} from "../models/httpStatus.model";
+import {inject} from "inversify";
 
 @controller('/contact')
 export class ContactController {
-    constructor(private contactService: ContactService) {
+    constructor(@inject("ContactService") private contactService: ContactService) {
     }
 
     @httpPost("/")
@@ -29,7 +30,7 @@ export class ContactController {
     @httpPut("/:id")
     public async update(@requestParam('id') id: Id, @request() request: Request, @response() response: Response) {
         const contact: Contact = request.body;
-        if (id.equals(contact.id)) {
+        if (Id.isEqual(id, contact.id)) {
             await this.contactService.update(contact);
             response.status(HttpStatusCode.Ok).send();
         } else {
