@@ -33,7 +33,7 @@ export class ContactController {
     }
 
     @httpPut("/:id")
-    public async update(@requestParam('id') id: Id, @request() request: Request, @response() response: Response) {
+    public async update(@requestParam('id') id: string, @request() request: Request, @response() response: Response) {
         const contact: Contact = request.body;
         if (Id.isEqual(id, contact._id)) {
             await this.contactService.update(contact);
@@ -45,14 +45,14 @@ export class ContactController {
     }
 
     @httpGet("/:id")
-    public async getById(@requestParam('id') id: Id, @response() response: Response) {
-        const contact = await this.contactService.getById(id);
+    public async getById(@requestParam('id') id: string, @response() response: Response) {
+        const contact = await this.contactService.getById(new Id(id));
         response.status(HttpStatusCode.Ok).send(contact);
     }
 
     @httpGet('')
-    async getByUserId(@queryParam('userId') userId: Id, response: Response, @queryParam('userId') fromIndex: number, @queryParam('userId') toIndex: number) {
-        let contacts = await this.contactService.getFor(userId);
+    async getByUserId(@queryParam('userId') userId: string, response: Response, @queryParam('userId') fromIndex: number, @queryParam('userId') toIndex: number) {
+        let contacts = await this.contactService.getFor(new Id(userId));
         if (fromIndex != null && toIndex != null) {
             contacts = contacts.slice(fromIndex, ++toIndex);
         }

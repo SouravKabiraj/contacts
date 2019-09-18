@@ -34,16 +34,16 @@ class ContactControllerSpec {
 
     @test
     public async shouldUpdateWhileIdIsProper(): Promise<void> {
-        const id = new Id();
+        const id = new Id('contactId123');
         const contact = new Contact(new Name('first', null, 'last'), new Id(), '+91 23478923794', 'test@kabiraj.com', 'ABC pub. ltd.');
-        contact.id = id;
+        contact._id = id;
 
         const mockRequest = httpMocks.createRequest({
             body: contact
         });
         const response = httpMocks.createResponse();
 
-        await this.targetObject.update(id, mockRequest, response);
+        await this.targetObject.update('contactId123', mockRequest, response);
 
         verify(this.contactService.update(contact)).once();
         expect(response._getStatusCode()).to.deep.equal(HttpStatusCode.Ok);
@@ -51,9 +51,9 @@ class ContactControllerSpec {
 
     @test
     public async shouldReturnBadRequestWhileIdIsNotProper(): Promise<void> {
-        const id = new Id();
+        const id = 'some123456789';
         const contact = new Contact(new Name('first', null, 'last'), new Id(), '+91 23478923794', 'test@kabiraj.com', 'ABC pub. ltd.');
-        contact.id = new Id();
+        contact._id = new Id();
 
         const mockRequest = httpMocks.createRequest({
             body: contact
@@ -68,13 +68,12 @@ class ContactControllerSpec {
 
     @test
     public async shouldFetchContactById(): Promise<void> {
-        const id = new Id();
         const response = httpMocks.createResponse();
-        const contact = new Contact(anything(), anything(), anything());
+        const contact = new Contact(anything(), anything(), 'dsgsdg');
 
-        when(this.contactService.getById(id)).thenResolve(contact);
+        when(this.contactService.getById(deepEqual(new Id('contactId123')))).thenResolve(contact);
 
-        await this.targetObject.getById(id, response);
+        await this.targetObject.getById('contactId123', response);
 
         expect(response._getData()).to.equal(contact);
         expect(response._getStatusCode()).to.deep.equal(HttpStatusCode.Ok);
@@ -84,10 +83,10 @@ class ContactControllerSpec {
     public async shouldFetchContactsForUser(): Promise<void> {
         const responseMock = httpMocks.createResponse();
         const contactListForUser = anything();
-        const userId = new Id();
-        when(this.contactService.getFor(userId)).thenResolve(contactListForUser);
+        const userId = new Id('userId123456');
+        when(this.contactService.getFor(deepEqual(userId))).thenResolve(contactListForUser);
 
-        await this.targetObject.getByUserId(userId, responseMock, null, null);
+        await this.targetObject.getByUserId('userId123456', responseMock, null, null);
 
         expect(responseMock._getData()).to.equal(contactListForUser);
     }
@@ -102,12 +101,11 @@ class ContactControllerSpec {
         const contact5 = anything();
         const contact6 = anything();
         const contactListForUser = [contact1, contact2, contact3, contact4, contact5, contact6];
-        const userId = new Id();
         const fromIndex = 0;
         const toIndex = 2;
-        when(this.contactService.getFor(userId)).thenResolve(contactListForUser);
+        when(this.contactService.getFor(deepEqual(new Id('userId123456')))).thenResolve(contactListForUser);
 
-        await this.targetObject.getByUserId(userId, responseMock, fromIndex, toIndex);
+        await this.targetObject.getByUserId('userId123456', responseMock, fromIndex, toIndex);
 
         expect(responseMock._getData()).to.deep.equal([contact1, contact2, contact3]);
     }
