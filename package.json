@@ -12,6 +12,7 @@
     "@hasezoey/typegoose": "^5.9.2",
     "@types/mongoose": "^5.5.17",
     "@types/node": "^7.10.7",
+    "express": "^4.17.1",
     "inversify": "^5.0.1",
     "inversify-express-utils": "^6.3.2",
     "mocha": "^6.2.0",
