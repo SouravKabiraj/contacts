@@ -19,7 +19,7 @@ class ContactServiceSpec {
 
     @test
     private async shouldCreateNewContact(): Promise<void> {
-        let contact = new Contact(new Name('First', null, 'User'), new Id(), '+12 979812632137', 'email@outlook.xom', 'NA');
+        let contact = new Contact(new Name('First', null, 'User'), 'new Id()', '+12 979812632137', 'email@outlook.xom', 'NA');
 
         await this.targetObject.create(contact);
 
@@ -28,7 +28,7 @@ class ContactServiceSpec {
 
     @test
     public async shouldUpdateContact(): Promise<void> {
-        const contact = new Contact(new Name('first', null, 'last'), new Id(), '+92 632647823', 'sjd@dj.com');
+        const contact = new Contact(new Name('first', null, 'last'), 'new Id()', '+92 632647823', 'sjd@dj.com');
 
         await this.targetObject.update(contact);
 
@@ -49,7 +49,7 @@ class ContactServiceSpec {
 
     @test
     public async shouldFetchContactsOfUser(): Promise<void> {
-        const userId = new Id();
+        const userId = 'new Id()';
         const contacts = anything();
 
         when(this.contactRepository.getByUserId(userId)).thenResolve(contacts);

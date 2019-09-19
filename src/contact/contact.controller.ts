@@ -40,7 +40,6 @@ export class ContactController {
             response.status(HttpStatusCode.Ok).send();
         } else {
             response.status(HttpStatusCode.BadRequest).send();
-
         }
     }
 
@@ -51,8 +50,8 @@ export class ContactController {
     }
 
     @httpGet('')
-    async getByUserId(@queryParam('userId') userId: string, response: Response, @queryParam('userId') fromIndex: number, @queryParam('userId') toIndex: number) {
-        let contacts = await this.contactService.getFor(new Id(userId));
+    async getByUserId(@queryParam('userId') userId: string, @response() response: Response, @queryParam('userId') fromIndex: number, @queryParam('userId') toIndex: number) {
+        let contacts = await this.contactService.getFor(userId);
         if (fromIndex != null && toIndex != null) {
             contacts = contacts.slice(fromIndex, ++toIndex);
         }

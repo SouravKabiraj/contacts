@@ -20,7 +20,7 @@ export class ContactService {
         return await this.contactRepository.getById(id);
     }
 
-    public async getFor(userId: Id): Promise<Contact[]> {
+    public async getFor(userId: string): Promise<Contact[]> {
         return await this.contactRepository.getByUserId(userId);
     }
 }

@@ -20,7 +20,7 @@ class ContactRepositorySpec extends BaseRepositorySpec {
     @test
     private async shouldSaveNewContact(): Promise<void> {
         const contactCount = await ContactModel.countDocuments();
-        const contact = new Contact(new Name('wef', '', 'safasf'), new Id(), 'asfasf');
+        const contact = new Contact(new Name('wef', '', 'safasf'), 'userId123456', 'asfasf');
 
         await this.targetObject.save(contact);
 
@@ -30,9 +30,9 @@ class ContactRepositorySpec extends BaseRepositorySpec {
 
     @test
     public async shouldUpdateContact(): Promise<void> {
-        const contact = new Contact(new Name('wef', '', 'safasf'), new Id(), 'asfasf', '', '');
+        const contact = new Contact(new Name('wef', '', 'safasf'), 'userId123456', 'asfasf', '', '');
         await ContactModel.create(contact);
-        const updatedContact = new Contact(new Name('uerweiouroiw', '', 'safasf'), new Id(), 'asfasf', '', '');
+        const updatedContact = new Contact(new Name('Sourav', '', 'Kabiraj'), '7879789674467', 'asfasf', '', '');
         updatedContact._id = contact._id;
 
         await this.targetObject.update(updatedContact);
@@ -44,7 +44,7 @@ class ContactRepositorySpec extends BaseRepositorySpec {
 
     @test
     public async shouldFetchContactById(): Promise<void> {
-        const contact = new Contact(new Name('wef', '', 'safasf'), new Id(), 'asfasf', '', '');
+        const contact = new Contact(new Name('wef', '', 'safasf'), 'userId123456', 'asfasf', '', '');
         await ContactModel.create(contact);
 
         const fetchedContact = await this.targetObject.getById(contact._id);
@@ -54,7 +54,7 @@ class ContactRepositorySpec extends BaseRepositorySpec {
 
     @test
     public async shouldFetchContactsByUserId(): Promise<void> {
-        const userId = new Id();
+        const userId = 'userId123456';
         const contact1 = new Contact(new Name('wef', '', 'safasf'), userId, 'asfasf', '', '');
         const contact2 = new Contact(new Name('wef', '', 'safasf'), userId, 'asfasf', '', '');
         const contact3 = new Contact(new Name('wef', '', 'safasf'), userId, 'asfasf', '', '');

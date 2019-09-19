@@ -10,9 +10,9 @@ export class Contact extends Typegoose {
     @prop() private emailId: string;
     @prop() private phoneNumber: string;
     @prop() private company: string;
-    @prop() public readonly userId: Id;
+    @prop() public readonly userId: string;
 
-    constructor(name: Name, userId: Id, phoneNumber: string, emailId?: string, company?: string) {
+    constructor(name: Name, userId: string, phoneNumber: string, emailId?: string, company?: string) {
         super();
         this._id = new Id();
         this.name = name;

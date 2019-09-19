@@ -21,7 +21,7 @@ class ContactControllerSpec {
 
     @test
     private async shouldCreateNewContact(): Promise<void> {
-        const contact = new Contact(new Name('first', null, 'last'), new Id(), '+91 23478923794', 'test@kabiraj.com', 'ABC pub. ltd.');
+        const contact = new Contact(new Name('first', null, 'last'), 'new Id()', '+91 23478923794', 'test@kabiraj.com', 'ABC pub. ltd.');
         const mockRequest = httpMocks.createRequest({
             body: contact
         });
@@ -35,7 +35,7 @@ class ContactControllerSpec {
     @test
     public async shouldUpdateWhileIdIsProper(): Promise<void> {
         const id = new Id('contactId123');
-        const contact = new Contact(new Name('first', null, 'last'), new Id(), '+91 23478923794', 'test@kabiraj.com', 'ABC pub. ltd.');
+        const contact = new Contact(new Name('first', null, 'last'), 'new Id()', '+91 23478923794', 'test@kabiraj.com', 'ABC pub. ltd.');
         contact._id = id;
 
         const mockRequest = httpMocks.createRequest({
@@ -52,7 +52,7 @@ class ContactControllerSpec {
     @test
     public async shouldReturnBadRequestWhileIdIsNotProper(): Promise<void> {
         const id = 'some123456789';
-        const contact = new Contact(new Name('first', null, 'last'), new Id(), '+91 23478923794', 'test@kabiraj.com', 'ABC pub. ltd.');
+        const contact = new Contact(new Name('first', null, 'last'), 'new Id()', '+91 23478923794', 'test@kabiraj.com', 'ABC pub. ltd.');
         contact._id = new Id();
 
         const mockRequest = httpMocks.createRequest({
@@ -83,8 +83,8 @@ class ContactControllerSpec {
     public async shouldFetchContactsForUser(): Promise<void> {
         const responseMock = httpMocks.createResponse();
         const contactListForUser = anything();
-        const userId = new Id('userId123456');
-        when(this.contactService.getFor(deepEqual(userId))).thenResolve(contactListForUser);
+        const userId = 'userId123456';
+        when(this.contactService.getFor(userId)).thenResolve(contactListForUser);
 
         await this.targetObject.getByUserId('userId123456', responseMock, null, null);
 
@@ -94,16 +94,16 @@ class ContactControllerSpec {
     @test
     public async shouldFetchContactsForUserFromRecordOneToRecordThree(): Promise<void> {
         const responseMock = httpMocks.createResponse();
-        const contact1 = new Contact(new Name('1', '', ''), new Id(), '');
-        const contact2 = new Contact(new Name('2', '', ''), new Id(), '');
-        const contact3 = new Contact(new Name('3', '', ''), new Id(), '');
-        const contact4 = new Contact(new Name('4', '', ''), new Id(), '');
+        const contact1 = new Contact(new Name('1', '', ''), 'userId123456', '');
+        const contact2 = new Contact(new Name('2', '', ''), ' new Id()', '');
+        const contact3 = new Contact(new Name('3', '', ''), 'new Id()', '');
+        const contact4 = new Contact(new Name('4', '', ''), 'new Id()', '');
         const contact5 = anything();
         const contact6 = anything();
         const contactListForUser = [contact1, contact2, contact3, contact4, contact5, contact6];
         const fromIndex = 0;
         const toIndex = 2;
-        when(this.contactService.getFor(deepEqual(new Id('userId123456')))).thenResolve(contactListForUser);
+        when(this.contactService.getFor('userId123456')).thenResolve(contactListForUser);
 
         await this.targetObject.getByUserId('userId123456', responseMock, fromIndex, toIndex);
 

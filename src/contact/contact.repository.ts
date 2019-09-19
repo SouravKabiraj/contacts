@@ -8,12 +8,11 @@ import {MongoUtility} from "../utilities/mongo.utility";
 export class ContactRepository extends BaseRepository {
     public async save(contact: Contact): Promise<void> {
         contact._id = new Id();
-        console.log(contact);
         await ContactModel.create(contact);
     }
 
     public async update(contact: Contact): Promise<void> {
-        await ContactModel.updateOne({_id: contact._id}, contact);
+        await ContactModel.findByIdAndUpdate(contact._id, contact);
     }
 
     public async getById(id: Id): Promise<Contact> {
@@ -22,7 +21,7 @@ export class ContactRepository extends BaseRepository {
         return contact;
     }
 
-    public async getByUserId(userId: Id): Promise<Contact[]> {
+    public async getByUserId(userId: string): Promise<Contact[]> {
         const documents = await ContactModel.find({userId: userId});
         const contacts = [];
         documents.forEach(document => {
