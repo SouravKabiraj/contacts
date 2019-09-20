@@ -31,13 +31,14 @@
     "@types/node": "^12.7.5",
     "chai": "latest",
     "del": "^5.1.0",
+    "gulp": "^4.0.2",
+    "gulp-mocha": "^7.0.1",
     "gulp-run": "^1.7.1",
-    "tslint": "^5.20.0",
     "gulp-tslint": "^8.1.4",
     "gulp-zip": "^5.0.0",
-    "gulp": "^4.0.2",
     "node-mocks-http": "latest",
     "ts-mockito": "^2.5.0",
-    "ts-node": "^8.4.1"
+    "ts-node": "^8.4.1",
+    "tslint": "^5.20.0"
   }
 }
