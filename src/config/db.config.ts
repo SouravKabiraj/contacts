@@ -1,4 +1,5 @@
 import * as config from './default.json';
-import {connect} from 'mongoose';
+import {connect, set} from 'mongoose';
 
 connect(config.dbURI, {useNewUrlParser: true, useUnifiedTopology: true});
+set('useFindAndModify', false);
