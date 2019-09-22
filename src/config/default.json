@@ -1,4 +1,7 @@
 {
   "dbURI": "mongodb://localhost:27017/cs_contact",
-  "saltSecret": "mySecret"
+  "saltSecret": "mySecret",
+  "rsa_algo": {
+    "algorithm": "RS256"
+  }
 }
