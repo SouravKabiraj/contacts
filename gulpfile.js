@@ -2,8 +2,8 @@ const mocha = require('gulp-mocha');
 const gulp = require('gulp');
 const run = require('gulp-run');
 const zip = require('gulp-zip');
-
 const tslint = require('gulp-tslint');
+
 const clean = function () {
     const del = require('del');
     return del(['build']);
@@ -23,7 +23,6 @@ const install = function (done) {
     });
 
 };
-
 const test = function () {
     return gulp.src('*/**/*.spec.ts')
         .pipe(mocha({
@@ -48,8 +47,8 @@ const lint = function () {
             emitError: false
         }))
 };
-gulp.task('build', gulp.series(clean, lint, install, test, assemble));
 
+gulp.task('build', gulp.series(clean, lint, install, test, assemble));
 gulp.task('clean', clean);
 gulp.task('install', install);
 gulp.task('assemble', assemble);

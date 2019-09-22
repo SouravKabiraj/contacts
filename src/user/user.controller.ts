@@ -5,6 +5,7 @@ import {User} from "./user.model";
 import {HttpStatusCode} from "../models/httpStatus.model";
 import {Id} from "../models/id.model";
 import {inject} from "inversify";
+import {PasswordUtility} from "../utilities/password.utility";
 
 @controller('/user')
 export class UserController {
@@ -13,7 +14,8 @@ export class UserController {
 
     @httpPost('')
     public async create(@request() request: Request, @response() response: Response): Promise<void> {
-        const user: User = request.body;
+        const body: User = request.body;
+        const user: User = PasswordUtility.getPasswordEncryptedUser(body);
         await this.userService.create(user);
         response.status(HttpStatusCode.Created).send();
     }

@@ -6,6 +6,7 @@ export class User extends Typegoose {
     @prop() private mailId: string;
     @prop() private name: string;
     @prop() private phone: string;
+    @prop() public password: string;
 
     constructor(mailId: string, name: string, phone: string) {
         super();

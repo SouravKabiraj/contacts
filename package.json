@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "@hasezoey/typegoose": "^5.9.2",
+    "cryptr": "^4.0.2",
     "errorhandler": "^1.5.1",
     "express": "^4.17.1",
     "inversify": "^5.0.1",

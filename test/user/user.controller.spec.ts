@@ -8,6 +8,7 @@ import {User} from "../../src/user/user.model";
 import {HttpStatusCode} from "../../src/models/httpStatus.model";
 import {expect} from 'chai';
 import {Id} from "../../src/models/id.model";
+import {PasswordUtility} from "../../src/utilities/password.utility";
 
 @suite
 class UserControllerSpec {
@@ -21,6 +22,7 @@ class UserControllerSpec {
     @test
     private async shouldCreateNewUser(): Promise<void> {
         const user = new User('suihd', 'jsdhf', 'hjfgew');
+        user.password = 'password';
         const request = httpMocks.createRequest({
             body: user
         });
@@ -28,6 +30,7 @@ class UserControllerSpec {
 
         await this.targetObject.create(request, response);
 
+        user.password = PasswordUtility.encrypt(user.password);
         verify(this.userService.create(user)).once();
         expect(response._getStatusCode()).to.equals(HttpStatusCode.Created);
     }
