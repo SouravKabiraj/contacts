@@ -1,15 +1,15 @@
 import fs from "fs";
-import './../../rsa_keys/public.key';
 import * as config from './default.json';
+import path = require('path');
 
 
 export class RsaConfig {
     public static getRSAPublicKey(): string {
-        return fs.readFileSync('./../../rsa_keys/public.key', 'utf8');
+        return fs.readFileSync(path.resolve(process.cwd(), './rsa_keys/public.pem'), 'utf8');
     }
 
     public static getRSAPrivateKey(): string {
-        return fs.readFileSync('./../../rsa_keys/private.key', 'utf8');
+        return fs.readFileSync(path.resolve(process.cwd(), './rsa_keys/private.pem'), 'utf8');
     }
 
     public static getRCAAlgorithm(): { algorithm: string } {
