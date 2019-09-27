@@ -3,8 +3,8 @@ import * as bodyParser from 'body-parser';
 import {InversifyExpressServer} from 'inversify-express-utils';
 
 import {container} from "./config/express-container.config";
-import {ErrorMiddleware} from "./middleware/error.middleware";
 import {LoggerUtility} from "./utilities/logger.utility";
+import {addMiddleware} from "./middleware/middlewares";
 
 // create server
 let server = new InversifyExpressServer(container);
@@ -17,7 +17,7 @@ server.setConfig((app) => {
 });
 
 let app = server.build();
-app.use(ErrorMiddleware.handle);
+addMiddleware(app);
 app.listen(3000);
 LoggerUtility.logSuccess('Server started successfully.');
 LoggerUtility.logInfo('Server is listening on port [3000].');

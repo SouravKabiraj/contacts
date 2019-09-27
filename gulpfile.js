@@ -3,6 +3,8 @@ const gulp = require('gulp');
 const run = require('gulp-run');
 const zip = require('gulp-zip');
 const tslint = require('gulp-tslint');
+const typescript = require('gulp-tsc');
+const tsconfig = require('./tsconfig');
 
 const clean = function () {
     const del = require('del');
@@ -32,10 +34,9 @@ const test = function () {
         }));
 };
 const assemble = function () {
-
     return gulp.src(['**/*', '!node_module/**', 'package-lock.json', '!.git/**', '!.idea/**'])
         .pipe(zip('contacts.zip'))
-        .pipe(gulp.dest('compressed/dist/'))
+        .pipe(gulp.dest('compressed/dist/'));
 };
 const lint = function () {
 
@@ -47,9 +48,18 @@ const lint = function () {
             emitError: false
         }))
 };
+const compile = function (done) {
+    run('tsc -p tsconfig.json').exec(err => {
+        if (err) {
+            console.log(err);
+        }
+        done();
+    });
+};
 
-gulp.task('build', gulp.series(clean, lint, install, test, assemble));
+gulp.task('build', gulp.series(clean, lint, install, test, assemble, compile));
 gulp.task('clean', clean);
 gulp.task('install', install);
 gulp.task('assemble', assemble);
 gulp.task('test', test);
+gulp.task('compile', compile);

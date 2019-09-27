@@ -4,13 +4,14 @@ export enum HttpStatusCode {
     Accepted = 202,
     NoContent = 204,
 
-    Conflict = 409,
-    NotFound = 404,
-    Forbidden = 403,
     BadRequest = 400,
+    Unauthorized = 401,
+    Forbidden = 403,
+    NotFound = 404,
+    Conflict = 409,
     UnprocessableEntity = 422,
 
+    InternalServerError = 500,
     NotImplemented = 501,
-    RequestTimedOut = 503,
-    InternalServerError = 500
+    RequestTimedOut = 503
 }

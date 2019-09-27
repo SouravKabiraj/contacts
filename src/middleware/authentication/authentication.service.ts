@@ -4,7 +4,7 @@ import {RsaConfig} from "../../config/rsa.config";
 import {injectable} from "inversify";
 
 @injectable()
-export class AuthMiddleware {
+export class AuthenticationService {
     public getTokenFor(user: User): string {
         const privateKey = RsaConfig.getRSAPrivateKey();
         const rcaAlgorithm = RsaConfig.getRCAAlgorithm();

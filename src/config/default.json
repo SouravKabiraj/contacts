@@ -3,5 +3,11 @@
   "saltSecret": "mySecret",
   "rsa_algo": {
     "algorithm": "RS256"
-  }
+  },
+  "whiteListedApis": [
+    {
+      "method": "POST",
+      "url": "/login"
+    }
+  ]
 }

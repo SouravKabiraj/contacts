@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 import {suite, test} from "mocha-typescript";
 import {deepEqual, instance, mock, when} from "ts-mockito";
-import {AuthMiddleware} from "../../src/middleware/authentication/auth.middleware";
+import {AuthenticationService} from "../../src/middleware/authentication/authentication.service";
 import {UserService} from "../../src/user/user.service";
 import * as httpMocks from "node-mocks-http";
 import {User} from "../../src/user/user.model";
@@ -13,7 +13,7 @@ import {expect} from 'chai';
 @suite
 class LoginControllerSpec {
     private targetObject: LoginController;
-    private authMiddleware = mock(AuthMiddleware);
+    private authMiddleware = mock(AuthenticationService);
     private userService = mock(UserService);
 
     constructor() {
