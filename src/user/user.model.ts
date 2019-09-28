@@ -2,7 +2,7 @@ import {Id} from "../models/id.model";
 import {prop, Typegoose} from "@hasezoey/typegoose";
 
 export class User extends Typegoose {
-    @prop() public readonly _id: Id;
+    @prop() public _id: Id;
     @prop() private mailId: string;
     @prop() private name: string;
     @prop() private phone: string;

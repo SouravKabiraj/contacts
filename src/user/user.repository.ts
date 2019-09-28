@@ -8,6 +8,7 @@ import {LoggerUtility} from "../utilities/logger.utility";
 @injectable()
 export class UserRepository extends BaseRepository {
     public async save(user: User): Promise<void> {
+        user._id = new Id();
         await UserModel.create(user);
         LoggerUtility.logInfo(`Saved new user with [${user._id}].`);
     }

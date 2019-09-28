@@ -5,6 +5,7 @@ import {AuthenticationService} from "./authentication.service";
 import {HttpStatusCode} from "../../models/httpStatus.model";
 import {whiteListedApis} from "../../config/api.config";
 import {inject, injectable} from "inversify";
+import {LoggerUtility} from "../../utilities/logger.utility";
 
 @injectable()
 export class AuthenticationMiddleware {
@@ -12,6 +13,7 @@ export class AuthenticationMiddleware {
     }
 
     public authenticate(err: Error, req: Request, res: Response, next: any): void {
+        LoggerUtility.logInfo(JSON.stringify(req));
         const isWhiteListedRequest = whiteListedApis.some(api => (req.baseUrl.includes(api.url) && req.method === api.method));
         isWhiteListedRequest ? next() : this.verify(req, res, next);
     }
