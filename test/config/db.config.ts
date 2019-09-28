@@ -1,4 +1,10 @@
 import * as config from './default.json';
-import {connect} from 'mongoose';
+import {connect, disconnect} from 'mongoose';
 
-connect(config.dbURI, {useNewUrlParser: true, useUnifiedTopology: true});
+export async function connectTestDatabase() {
+    await connect(config.dbURI, {useNewUrlParser: true, useUnifiedTopology: true});
+}
+
+export async function disconnectTestDatabase() {
+    await disconnect();
+}

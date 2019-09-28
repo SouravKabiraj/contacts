@@ -20,10 +20,13 @@ export class LoginController {
         const password = req.body.password;
 
         const user = await this.userService.getById(new Id(id));
-
-        if (PasswordUtility.check(password, user.password)) {
-            const token = this.authMiddleware.getTokenFor(user);
-            res.status(HttpStatusCode.Ok).send({token});
+        if (user) {
+            if (PasswordUtility.check(password, user.password)) {
+                const token = this.authMiddleware.getTokenFor(user);
+                res.status(HttpStatusCode.Ok).send({token});
+            } else {
+                res.status(HttpStatusCode.BadRequest).send(new Error(ErrorType.AUTHENTICATION_ERROR, 'Invalid userID and password.'));
+            }
         } else {
             res.status(HttpStatusCode.BadRequest).send(new Error(ErrorType.AUTHENTICATION_ERROR, 'Invalid userID and password.'));
         }
