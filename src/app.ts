@@ -5,9 +5,10 @@ import {InversifyExpressServer} from 'inversify-express-utils';
 import {container} from "./config/express-container.config";
 import {LoggerUtility} from "./utilities/logger.utility";
 import {addMiddleware} from "./middleware/middlewares";
+import {AuthenticationMiddleware} from "./middleware/authentication/authentication.middleware";
 
 // create server
-let server = new InversifyExpressServer(container);
+let server = new InversifyExpressServer(container, null, null, null, AuthenticationMiddleware);
 server.setConfig((app) => {
     // add body parser
     app.use(bodyParser.urlencoded({

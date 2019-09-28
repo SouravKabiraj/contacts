@@ -4,10 +4,7 @@ import '../middleware/authentication/authentication.middleware';
 import {container} from "../config/express-container.config";
 import {LoggerUtility} from "../utilities/logger.utility";
 
-const authenticationMiddleware = container.get(AuthenticationMiddleware);
-
 export function addMiddleware(app) {
-    LoggerUtility.logInfo('Adding Error Handler and Authentication Middleware');
+    LoggerUtility.logInfo('Adding Middleware');
     app.use(ErrorMiddleware.handle);
-    app.use(authenticationMiddleware.authenticate);
 }

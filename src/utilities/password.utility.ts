@@ -13,7 +13,6 @@ export class PasswordUtility {
 
     public static getPasswordEncryptedUser(user: User): User {
         user.password = PasswordUtility.encrypt(user.password);
-        LoggerUtility.logDebug(JSON.stringify(user));
         const encryptedUser: User = user;
         return encryptedUser;
     }

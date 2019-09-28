@@ -7,7 +7,11 @@
   "whiteListedApis": [
     {
       "method": "POST",
-      "url": "/login"
+      "url": "/login/"
+    },
+    {
+      "method": "GET",
+      "url": "/contact/health-check/"
     }
   ]
 }

@@ -12,7 +12,7 @@ export class AuthenticationService {
         return token;
     }
 
-    public validateToken(token: string): User {
+    public getUser(token: string): User {
         const publicKey = RsaConfig.getRSAPublicKey();
         const rcaAlgorithm = RsaConfig.getRCAAlgorithm();
         const payload: User = verify(token, publicKey, {algorithms: [rcaAlgorithm.algorithm]});
