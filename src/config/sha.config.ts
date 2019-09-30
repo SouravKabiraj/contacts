@@ -1,4 +1,4 @@
-import {saltSecret} from './default.json';
+import {saltSecret} from '../../config/default.json';
 
 const CryptrObject = require('cryptr');
 

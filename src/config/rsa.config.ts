@@ -1,5 +1,5 @@
 import fs from "fs";
-import * as config from './default.json';
+import * as config from '../../config/default.json';
 import path = require('path');
 
 

@@ -13,5 +13,6 @@
       "method": "GET",
       "url": "/contact/health-check/"
     }
-  ]
+  ],
+  "port": 3000
 }

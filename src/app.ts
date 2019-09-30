@@ -6,6 +6,7 @@ import {container} from "./config/express-container.config";
 import {LoggerUtility} from "./utilities/logger.utility";
 import {addMiddleware} from "./middleware/middlewares";
 import {AuthenticationMiddleware} from "./middleware/authentication/authentication.middleware";
+import {port} from "./config/api.config";
 
 // create server
 let server = new InversifyExpressServer(container, null, null, null, AuthenticationMiddleware);
@@ -19,6 +20,6 @@ server.setConfig((app) => {
 
 let app = server.build();
 addMiddleware(app);
-app.listen(3000);
+app.listen(port);
 LoggerUtility.logSuccess('Server started successfully.');
 LoggerUtility.logInfo('Server is listening on port [3000].');
