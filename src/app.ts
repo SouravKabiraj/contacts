@@ -22,4 +22,4 @@ let app = server.build();
 addMiddleware(app);
 app.listen(port);
 LoggerUtility.logSuccess('Server started successfully.');
-LoggerUtility.logInfo('Server is listening on port [3000].');
+LoggerUtility.logInfo(`Server is listening on port [${port}].`);

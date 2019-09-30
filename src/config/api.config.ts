@@ -1,4 +1,4 @@
-import * as config from '../../config/default.json';
+const config = require('config');
 
-export const whiteListedApis = config.whiteListedApis;
-export const port = config.port;
+export const whiteListedApis = config.get('whiteListedApis');
+export const port = config.get('port');

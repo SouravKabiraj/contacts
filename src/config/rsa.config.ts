@@ -1,5 +1,6 @@
 import fs from "fs";
-import * as config from '../../config/default.json';
+
+const config = require('config');
 import path = require('path');
 
 
@@ -13,6 +14,6 @@ export class RsaConfig {
     }
 
     public static getRCAAlgorithm(): { algorithm: string } {
-        return config.rsa_algo;
+        return config.get('rsa_algo');
     }
 }

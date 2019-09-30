@@ -1,5 +1,5 @@
-import * as config from '../../config/default.json';
+const config = require('config');
 import {connect, set} from 'mongoose';
 
-connect(config.dbURI, {useNewUrlParser: true, useUnifiedTopology: true});
+connect(config.get('dbURI'), {useNewUrlParser: true, useUnifiedTopology: true});
 set('useFindAndModify', false);
