@@ -1,3 +1,4 @@
 {
+  "dbURI": "mongodb://admin:admin123@ds111765.mlab.com:11765/contacts",
   "port": 3001
 }
