@@ -1,4 +1,4 @@
-import {NextFunction, Request, Response} from "express";
+import {Request, Response} from "express";
 import {AuthenticationService} from "./authentication.service";
 import {HttpStatusCode} from "../../models/httpStatus.model";
 import {inject, injectable} from "inversify";
@@ -17,11 +17,11 @@ export class AuthenticationMiddleware {
     }
 
     private verify(req: Request, res: Response, next: any): void {
-        const token = req.body.token || req.query['x-access-token'];
+        const token = req.body.token || req.headers['x-access-token'];
         const userId = new Id(req.query['userId']);
         if (token && userId) {
             const payloadUser = this.authenticationService.getUser(token);
-            if (payloadUser._id === userId) {
+            if (Id.isEqual(payloadUser._id, userId)) {
                 next();
             } else {
                 res.status(HttpStatusCode.Forbidden).send(new Error(ErrorType.AUTHENTICATION_ERROR, 'Invalid UserId.'));

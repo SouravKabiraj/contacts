@@ -28,7 +28,7 @@ export class LoginController {
                 res.status(HttpStatusCode.BadRequest).send(new Error(ErrorType.AUTHENTICATION_ERROR, 'Invalid userID and password.'));
             }
         } else {
-            res.status(HttpStatusCode.BadRequest).send(new Error(ErrorType.AUTHENTICATION_ERROR, 'Invalid userID and password.'));
+            res.status(HttpStatusCode.BadRequest).send(new Error(ErrorType.AUTHENTICATION_ERROR, 'Invalid userID.'));
         }
     }
 }
