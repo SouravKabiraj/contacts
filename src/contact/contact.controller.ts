@@ -22,7 +22,7 @@ export class ContactController {
 
     @httpGet('/health-check')
     public healthCheck(@request() request: Request, @response() response: Response): void {
-        response.send(HttpStatusCode.Ok).send({health: 'ok'});
+        response.status(HttpStatusCode.Ok).send({health: 'ok'});
     }
 
     @httpPost("/")
